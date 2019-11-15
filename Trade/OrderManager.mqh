@@ -154,7 +154,7 @@ public:
    //--- Order modification
    bool              modify(int ticket,double stoploss,double takeprofit);
    bool              modify(int ticket,int stoploss,int takeprofit);
-   bool              modifyPending(int ticket,double price,datetime expiration=0);
+   bool              modifyPending(int ticket,double price,double stoploss=0.0,double takeprofit=0.0,datetime expiration=0);
 
    //--- Order closing
    bool              closeCurrent();
@@ -252,9 +252,9 @@ bool OrderManager::modify(int ticket,int stoploss,int takeprofit)
 //+------------------------------------------------------------------+
 //| Modify only pending orders                                       |
 //+------------------------------------------------------------------+
-bool OrderManager::modifyPending(int ticket,double price,datetime expiration)
+bool OrderManager::modifyPending(int ticket,double price,double stoploss=0.0,double takeprofit=0.0,datetime expiration)
   {
-   bool success=OrderModify(ticket,OrderBase::N(s,price),0,0,expiration);
+   bool success=OrderModify(ticket,OrderBase::N(s,price),stoploss,takeprofit,expiration);
    if(!success)
      {
       int err=Mql::getLastError();
